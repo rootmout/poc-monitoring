@@ -35,4 +35,4 @@ spec:
         ports:
         - containerPort: 8080
           name: web
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
