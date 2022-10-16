@@ -18,7 +18,7 @@ kind: StatefulSet
 metadata:
   name: mocked-app
 spec:
-  serviceName: "mocked-app"
+  serviceName: mocked-app
   replicas: 3
   selector:
     matchLabels:
@@ -28,6 +28,7 @@ spec:
       labels:
         app: mocked-app
     spec:
+      subdomain: mocked-app
       containers:
       - name: mocked-app
         image: rootmout/poc-monitoring-mocked-app:v0.0.2
