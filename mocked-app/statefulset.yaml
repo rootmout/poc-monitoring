@@ -1,0 +1,37 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mocked-app
+  labels:
+    app: mocked-app
+spec:
+  ports:
+  - port: 8080
+    name: web
+  clusterIP: None
+  selector:
+    app: mocked-app
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mocked-app
+spec:
+  serviceName: "mocked-app"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mocked-app
+  template:
+    metadata:
+      labels:
+        app: mocked-app
+    spec:
+      containers:
+      - name: mocked-app
+        image: rootmout/poc-monitoring-mocked-app:v0.0.2
+        ports:
+        - containerPort: 8080
+          name: web
+        imagePullPolicy: IfNotPresent

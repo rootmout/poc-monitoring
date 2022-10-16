@@ -1,0 +1,7 @@
+# HELP cert_expiration Timestamp of cert expiration
+# TYPE cert_expiration gauge
+cert_expiration 1697484467
+
+# HELP in_sync Node connected to others
+# TYPE in_sync gauge
+in_sync 0
