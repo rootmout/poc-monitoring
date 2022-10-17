@@ -12,11 +12,18 @@ data:
       rules:
       - alert: Instance not in sync
         expr: in_sync != 1
-        for: 1m
+        for: 30s
         labels:
           severity: high
         annotations:
           summary: Instance not in sync
+      - alert: Cert expired
+        expr: time() - cert_expiration > 0
+        for: 30s
+        labels:
+          severity: medium
+        annotations:
+          summary: The node cert has expired
   prometheus.yml: |-
     global:
       scrape_interval: 5s
@@ -33,6 +40,7 @@ data:
     scrape_configs:
       - job_name: 'mocked-app'
         static_configs:
-          - targets: ['mocked-app-0.mocked-app.<test_namespace>.svc.cluster.local:8080']
-          - targets: ['mocked-app-1.mocked-app.<test_namespace>.svc.cluster.local:8080']
-          - targets: ['mocked-app-2.mocked-app.<test_namespace>.svc.cluster.local:8080']
+          - targets:
+            - 'mocked-app-0.mocked-app.<test_namespace>.svc.cluster.local:8080'
+            - 'mocked-app-1.mocked-app.<test_namespace>.svc.cluster.local:8080'
+            - 'mocked-app-2.mocked-app.<test_namespace>.svc.cluster.local:8080'
