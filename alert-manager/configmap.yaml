@@ -11,7 +11,7 @@ data:
 
     route:
       receiver: ops-genie
-      group_by: ['alertname', 'priority']
+      group_by: ['alertname']
       group_wait: 10s
       repeat_interval: 30m
 
@@ -24,9 +24,9 @@ data:
 
     inhibit_rules:
     - target_matchers:
-      - severity = medium
+      - type = integrity
       source_matchers:
-      - severity = high
+      - type = connection
       equal:
         - instance
 

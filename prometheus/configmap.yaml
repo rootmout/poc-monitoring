@@ -10,18 +10,20 @@ data:
     groups:
     - name: mocked-app alerts
       rules:
-      - alert: Instance not in sync
+      - alert: not_in_sync
         expr: in_sync != 1
         for: 30s
         labels:
-          severity: high
+          severity: medium
+          type: integrity
         annotations:
           summary: Instance not in sync
-      - alert: Cert expired
+      - alert: cert_expired
         expr: time() - cert_expiration > 0
         for: 30s
         labels:
           severity: medium
+          type: connection
         annotations:
           summary: The node cert has expired
   prometheus.yml: |-
