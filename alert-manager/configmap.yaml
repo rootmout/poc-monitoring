@@ -9,7 +9,7 @@ data:
     templates:
     - '/etc/alertmanager/*.tmpl'
     route:
-      receiver: alert-emailer
+      receiver: ops-genie
       group_by: ['alertname', 'priority']
       group_wait: 10s
       repeat_interval: 30m
@@ -22,13 +22,10 @@ data:
       #     repeat_interval: 1m
 
     receivers:
-    - name: alert-emailer
-      email_configs:
-      - to: example@example.com
-        send_resolved: false
-        from: from-email@email.com
-        smarthost: smtp.eample.com:25
-        require_tls: false
+    - name: ops-genie
+      opsgenie_configs:
+      - api_key_file: /etc/alertmanager/opsgenie/api.key
+        update_alerts: true
     # - name: slack_demo
     #   slack_configs:
     #   - api_url: https://hooks.slack.com/services/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sz4Qk

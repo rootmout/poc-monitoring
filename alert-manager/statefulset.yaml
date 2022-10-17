@@ -51,6 +51,8 @@ spec:
           mountPath: /etc/alertmanager-templates
         - name: alertmanager
           mountPath: /alertmanager
+        - name: ops-genie-api-secret
+          mountPath: /etc/alertmanager/opsgenie
       volumes:
       - name: config-volume
         configMap:
@@ -58,5 +60,8 @@ spec:
       - name: templates-volume
         configMap:
           name: alertmanager-templates
+      - name: ops-genie-api-secret
+        secret:
+          secretName: opsgenie
       - name: alertmanager
         emptyDir: {}
