@@ -8,28 +8,28 @@ data:
     global:
     templates:
     - '/etc/alertmanager/*.tmpl'
+
     route:
       receiver: ops-genie
       group_by: ['alertname', 'priority']
       group_wait: 10s
       repeat_interval: 30m
-      # routes:
-      #   - receiver: slack_demo
-      #   # Send severity=slack alerts to slack.
-      #     match:
-      #       severity: high
-      #     group_wait: 10s
-      #     repeat_interval: 1m
 
     receivers:
     - name: ops-genie
       opsgenie_configs:
       - api_key_file: /etc/alertmanager/opsgenie/api.key
         update_alerts: true
-    # - name: slack_demo
-    #   slack_configs:
-    #   - api_url: https://hooks.slack.com/services/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sz4Qk
-    #     channel: '#devopscube-demo'
+        tags: "rootmout-test"
+
+    inhibit_rules:
+    - target_matchers:
+      - severity = medium
+      source_matchers:
+      - severity = high
+      equal:
+        - instance
+
 ---
 apiVersion: v1
 kind: ConfigMap
